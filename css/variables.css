@@ -1,0 +1,15 @@
+:root {
+    /* 🎨 Palet Warna */
+    --primary-green: #144C3C;
+    --secondary-green: #125C51;
+    --success-green: #25A860;
+    --warning-yellow: #F8C400;
+    --danger-red: #A83932;
+    --neutral-bg: #FFFFFF;
+    --soft-gray: #F4F4F4;
+    --dark-gray-text: #121212;
+
+    /* 🧩 Font */
+    --font-primary: 'Poppins', sans-serif;
+    --font-secondary: 'Inter', sans-serif;
+}
