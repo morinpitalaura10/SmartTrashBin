@@ -1,4 +1,4 @@
-/* reset & dasar */
+/* ===== RESET & DASAR ===== */
 * {
     margin: 0;
     padding: 0;
@@ -6,13 +6,22 @@
 }
 
 body {
-    display: flex;
     font-family: Arial, sans-serif;
     background-color: #f5f7fa;
     color: #333;
     transition: background-color 0.3s, color 0.3s;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column; /* biar footer bisa di bawah */
 }
 
+/* ===== CONTAINER UTAMA ===== */
+.main-container {
+    display: flex;
+    flex: 1; /* isi penuh sisa layar */
+}
+
+/* ===== SIDEBAR ===== */
 .sidebar {
     width: 220px;
     background-color: #ffffff;
@@ -23,11 +32,11 @@ body {
 
 .logo {
     text-align: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
 }
 
 .site-logo {
-    width: 150px;
+    width: 200px;
     height: auto;
 }
 
@@ -41,10 +50,11 @@ body {
 
 .menu {
     list-style: none;
+    margin-top: 10px;
 }
 
 .menu li {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .menu a {
@@ -56,25 +66,30 @@ body {
     align-items: center;
     gap: 8px;
     border-radius: 4px;
+    transition: background-color 0.3s, color 0.3s;
 }
 
-.menu a:hover,
 .menu a.active {
     background-color: #0b4f3f;
     color: #fff;
 }
 
-.mode-toggle {
-    margin-top: 40px;
+.menu a:hover {
+    background-color: #e0e0e0;
 }
 
+.mode-toggle {
+    margin-top: 15px;
+}
+
+/* ===== KONTEN ===== */
 .content {
     flex: 1;
     padding: 30px;
     overflow-y: auto;
 }
 
-/* Kartu ringkasan */
+/* ===== KARTU RINGKASAN (dengan ikon PNG bulat) ===== */
 .cards {
     display: flex;
     gap: 20px;
@@ -90,37 +105,52 @@ body {
     display: flex;
     align-items: center;
     gap: 15px;
+    transition: transform 0.3s ease;
 }
 
-.card .icon {
-    font-size: 30px;
+.card:hover {
+    transform: translateY(-5px);
 }
 
-.card:nth-child(1) {
-    background: #e8fdf2;
-    /* Hijau muda */
+/* ===== LINGKARAN WARNA UNTUK PNG ===== */
+.card .icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
 }
 
-.card:nth-child(1) .icon {
-    color: #28a745;
+/* Warna berbeda tiap kartu */
+.card:nth-child(1) .icon-wrapper {
+    background-color: #34c759; /* hijau untuk total */
+}
+.card:nth-child(2) .icon-wrapper {
+    background-color: #ffcc00; /* kuning untuk kosong */
+}
+.card:nth-child(3) .icon-wrapper {
+    background-color: #ff3b30; /* merah untuk penuh */
 }
 
-.card:nth-child(2) {
-    background: #ffe8e8;
-    /* Merah muda */
+/* ===== GAMBAR IKON PNG DI DALAM LINGKARAN ===== */
+.card img.card-icon {
+    width: 28px;
+    height: 28px;
+    object-fit: contain;
+    filter: brightness(0) invert(1); /* ubah ikon PNG jadi putih */
+    transition: transform 0.3s ease;
 }
 
-.card:nth-child(2) .icon {
-    color: #dc3545;
+.card:hover img.card-icon {
+    transform: scale(1.1);
 }
 
-.card:nth-child(3) {
-    background: #fff9e5;
-    /* Kuning muda */
-}
-
-.card:nth-child(3) .icon {
-    color: #ffc107;
+/* ==== Konten teks di dalam card ==== */
+.card .info {
+    display: flex;
+    flex-direction: column;
 }
 
 .card .title {
@@ -135,7 +165,13 @@ body {
     color: #0b4f3f;
 }
 
-/* Tabel */
+/* ==== Animasi Hover ==== */
+.card:hover .value {
+    color: #00b87b;
+    transition: color 0.3s ease;
+}
+
+/* ===== TABEL ===== */
 .table-container {
     background-color: #ffffff;
     padding: 20px;
@@ -163,6 +199,7 @@ body {
     border-bottom: 1px solid #eaeaea;
 }
 
+/* ===== STATUS ===== */
 .status-aman {
     background: #4caf50;
     color: #fff;
@@ -200,7 +237,19 @@ body {
     background: #084630;
 }
 
-/* Mode gelap */
+/* ===== FOOTER ===== */
+.footer {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+    background: #ffffff;
+    color: #555;
+    font-size: 14px;
+    border-top: 1px solid #e0e0e0;
+    margin-top: auto; /* biar nempel bawah */
+}
+
+/* ===== MODE GELAP ===== */
 .dark-mode {
     background-color: #121212;
     color: #e0e0e0;
@@ -237,4 +286,59 @@ body {
 .dark-mode .table-container thead th,
 .dark-mode .table-container tbody td {
     color: #ccc;
+}
+
+/* dark mode untuk card */
+.dark-mode .card {
+    background-color: #1f1f1f;
+}
+
+.dark-mode .card .icon-wrapper {
+    filter: brightness(1.2);
+}
+
+.dark-mode .card .title {
+    color: #aaa;
+}
+
+.dark-mode .footer {
+    background: #1e1e1e;
+    color: #cccccc;
+    border-top: 1px solid #333;
+}
+
+/* ===== TEKS ===== */
+h1 {
+    text-align: center;
+    font-size: 20px;
+    color: #000000;
+    margin-top: 5px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+p {
+    text-align: center;
+    font-size: 12px;
+    color: #3c3b3b;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+    transition: color 0.3s ease;
+}
+
+.judul-dashboard {
+    text-align: center;
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #2c3e50;
+    transition: color 0.3s ease;
+}
+
+/* ===== WARNA TEKS DARK MODE ===== */
+.dark-mode .judul-dashboard,
+.dark-mode h1,
+.dark-mode p {
+    color: #ffffff;
 }

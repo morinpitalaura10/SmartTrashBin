@@ -1,33 +1,97 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <title>Smart Trash Bin Dashboard</title>
-    <!-- Font Awesome CDN untuk ikon -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-        integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <!-- Font Awesome (buat icon sidebar aja) -->
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
-    <aside class="sidebar">
-        <div class="logo">
-            <img src="assets/logo.png" alt="Smart Trash Bin" class="site-logo">
-        </div>
-        <ul class="menu">
-            <li><a href="#" id="link-dashboard" class="active"><i class="fa-solid fa-table-columns"></i> Dashboard</a>
-            </li>
-            <li><a href="#" id="link-riwayat"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat</a></li>
-            <li><a href="#" id="link-grafik"><i class="fa-solid fa-chart-column"></i> Grafik</a></li>
-            <li class="mode-toggle"><label><input type="checkbox" id="toggle-theme"> <i class="fa-solid fa-moon"></i>
-                    Dark Mode</label></li>
-        </ul>
-    </aside>
-    <main class="content" id="content">
-        <!-- Konten Dashboard ditampilkan di sini -->
-    </main>
+    <!-- ======== CONTAINER UTAMA ======== -->
+    <div class="main-container">
+        <!-- ======== SIDEBAR ======== -->
+        <aside class="sidebar">
+            <div class="logo">
+                <img src="assets/Logo.png" alt="Smart Trash Bin" class="site-logo">
+            </div>
+            <ul class="menu">
+                <li><a href="#" id="link-dashboard" class="active"><i class="fa-solid fa-table-columns"></i> Dashboard</a></li>
+                <li><a href="#" id="link-riwayat"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat</a></li>
+                <li><a href="#" id="link-grafik"><i class="fa-solid fa-chart-column"></i> Grafik</a></li>
+                <li class="mode-toggle">
+                    <label>
+                        <input type="checkbox" id="toggle-theme"> 
+                        <i class="fa-solid fa-moon"></i> Dark Mode
+                    </label>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- ======== KONTEN ======== -->
+        <main class="content" id="content">
+            
+            <!-- ===== HEADER DASHBOARD ===== -->
+            <header class="dashboard-header">
+                <div class="header-text">
+                    <h1>SMART TRASH BIN DASHBOARD</h1>
+                    <p>Smart monitoring for cleaner environment</p>
+                </div>
+                <div class="notif">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="notif-badge"></span>
+                </div>
+            </header>
+
+            <!-- ===== KARTU STATISTIK ===== -->
+            <div class="cards">
+                <!-- Total Sampah -->
+                <div class="card">
+                    <div class="icon-wrapper green">
+                        <img src="assets/total.png" alt="Total Sampah" class="card-icon">
+                    </div>
+                    <div class="info">
+                        <div class="title">Total Tempat Sampah</div>
+                        <div class="value">5</div>
+                    </div>
+                </div>
+
+                <!-- Tempat Kosong -->
+                <div class="card">
+                    <div class="icon-wrapper yellow">
+                        <img src="assets/kosong.png" alt="Tempat Kosong" class="card-icon">
+                    </div>
+                    <div class="info">
+                        <div class="title">Tempat Sampah Kosong</div>
+                        <div class="value">3</div>
+                    </div>
+                </div>
+
+                <!-- Tempat Penuh -->
+                <div class="card">
+                    <div class="icon-wrapper red">
+                        <img src="assets/penuh.png" alt="Tempat Penuh" class="card-icon">
+                    </div>
+                    <div class="info">
+                        <div class="title">Tempat Sampah Penuh</div>
+                        <div class="value">2</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- ======== FOOTER ======== -->
+    <footer class="footer">
+        © 2025 Smart Trash Bin. Hak cipta dilindungi.
+    </footer>
+
+    <!-- ======== SCRIPT ======== -->
     <script src="script.js"></script>
 </body>
-
 </html>
