@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Grafik | Smart Trash Bin</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Styles global -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Chart.js + Datalabels -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0"></script>
+</head>
+<body>
+  <div class="main-container">
+    <!-- SIDEBAR (include) -->
+    <div data-include="components/sidebar.html"></div>
+
+    <!-- KONTEN -->
+    <main class="content" id="content">
+      <header class="dashboard-header show">
+        <div class="header-text">
+          <h1>Grafik Tempat Sampah</h1>
+          <p>Smart monitoring for cleaner environment</p>
+        </div>
+        <div class="notif"><i class="fa-solid fa-bell"></i></div>
+      </header>
+
+      <!-- KARTU CHART -->
+      <section class="chart-card" style="margin-bottom:16px;">
+        <h3 class="section-title" style="text-align:left;margin:0 0 12px 4px;font-size:18px;font-weight:700;">
+          Distribusi Status Tempat Sampah
+        </h3>
+        <div class="chart-wrap">
+          <canvas id="statusChart"></canvas>
+        </div>
+        <div id="statusLegend" class="chart-legend"></div>
+      </section>
+
+      <!-- KARTU RINGKASAN (otomatis dari data) -->
+      <section class="summary-card">
+        <h3 class="summary-title">Ringkasan Status Bin</h3>
+        <div class="summary-row"><span>Total Bin</span>      <span id="sum-total" class="val">-</span></div>
+        <div class="summary-row"><span>Penuh</span>          <span id="sum-penuh" class="val red">-</span></div>
+        <div class="summary-row"><span>Hampir Penuh</span>   <span id="sum-hampir" class="val yellow">-</span></div>
+        <div class="summary-row"><span>Aman</span>           <span id="sum-aman" class="val green">-</span></div>
+      </section>
+    </main>
+  </div>
+
+  <!-- FOOTER (include) -->
+  <div data-include="components/footer.html"></div>
+
+  <!-- Loader komponen + script umum -->
+  <script src="include.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Inisialisasi Tema + Grafik -->
+  <script>
+    document.addEventListener('componentsLoaded', () => {
+      // Sync dark mode toggle
+      const toggle = document.getElementById('toggle-theme');
+      const saved = localStorage.getItem('stb-theme');
+      if (saved === 'dark') {
+        document.body.classList.add('dark-mode');
+        if (toggle) toggle.checked = true;
+      }
+      toggle?.addEventListener('change', () => {
+        const dark = toggle.checked;
+        document.body.classList.toggle('dark-mode', dark);
+        localStorage.setItem('stb-theme', dark ? 'dark' : 'light');
+      });
+
+      // Tandai menu aktif = Grafik
+      document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+      document.getElementById('link-grafik')?.classList.add('active');
+
+      // ================== DATA DUMMY DARI DASHBOARD ==================
+      // Sesuaikan kalau nanti mau ambil dari API/DB.
+      const bins = [
+        { id: 'B001', name: 'Bin Utama',       floor: 'Lantai 1',  capacity: 85 }, // Hampir Penuh
+        { id: 'B002', name: 'Bin Koridor',     floor: 'Lantai 2',  capacity: 15 }, // Aman
+        { id: 'B003', name: 'Bin Dapur',       floor: 'Lantai 1',  capacity:  8 }, // Aman
+        { id: 'B004', name: 'Bin Ruang Rapat', floor: 'Lantai 3',  capacity: 90 }, // Penuh
+        { id: 'B005', name: 'Bin Lobby',       floor: 'Lantai Dasar', capacity: 17 } // Aman
+      ];
+
+      // Aturan klasifikasi status (sama seperti di tabel):
+      // >= 90 -> Penuh, 70..89 -> Hampir Penuh, lainnya -> Aman
+      const classify = (pct) => pct >= 90 ? 'Penuh' : (pct >= 70 ? 'Hampir Penuh' : 'Aman');
+
+      // Hitung distribusi
+      let penuh = 0, hampir = 0, aman = 0;
+      bins.forEach(b => {
+        const s = classify(b.capacity);
+        if (s === 'Penuh') penuh++;
+        else if (s === 'Hampir Penuh') hampir++;
+        else aman++;
+      });
+
+      const totalBin = bins.length;
+      const labels = ['Aman', 'Hampir Penuh', 'Penuh']; // urutan sesuai warna hijau-kuning-merah
+      const counts = [aman, hampir, penuh];
+      const percents = counts.map(v => Math.round((v / totalBin) * 100));
+
+      // Update ringkasan
+      document.getElementById('sum-total').textContent  = totalBin;
+      document.getElementById('sum-penuh').textContent  = penuh;
+      document.getElementById('sum-hampir').textContent = hampir;
+      document.getElementById('sum-aman').textContent   = aman;
+
+      // ================== RENDER CHART ==================
+      const canvas = document.getElementById('statusChart');
+      if (canvas) {
+        const ctx = canvas.getContext('2d');
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels,
+            datasets: [{
+              label: 'Persentase',
+              data: percents,                          // tampilkan % di sumbu Y
+              backgroundColor: ['#2ecc71', '#f1c40f', '#e74c3c'], // hijau, kuning, merah
+              borderRadius: 8,
+              categoryPercentage: 0.9,                 // rapetin jarak antar bar
+              barPercentage: 0.9
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            layout: { padding: { top: 4, bottom: 0 } },
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: (ctx) => {
+                    const i = ctx.dataIndex;
+                    return ` ${counts[i]} bin (${percents[i]}%)`;
+                  }
+                }
+              },
+              datalabels: {
+                anchor: 'end',
+                align: 'end',
+                formatter: (_, ctx) => `${percents[ctx.dataIndex]}%`,
+                font: { weight: '700' }
+              }
+            },
+            scales: {
+              x: { grid: { display: false, offset: true }, ticks: { padding: 4 } },
+              y: {
+                beginAtZero: true,
+                min: 0,
+                max: 60,                                // 0, 15, 30, 45, 60
+                ticks: { stepSize: 15, precision: 0, padding: 4 },
+                grid: { color: 'rgba(0,0,0,0.06)', drawBorder: false }
+              }
+            }
+          },
+          plugins: [ChartDataLabels]
+        });
+
+        // Legend di tengah
+        const legendLabels = ['Penuh', 'Hampir Penuh', 'Aman/Kosong'];
+        const legendColors = ['#e74c3c', '#f1c40f', '#2ecc71'];
+        const legendEl = document.getElementById('statusLegend');
+        legendEl.innerHTML = legendLabels
+          .map((text, i) => `
+            <span class="item">
+              <span class="dot" style="background:${legendColors[i]}"></span>${text}
+            </span>
+          `).join('');
+      }
+    });
+  </script>
+</body>
+</html>

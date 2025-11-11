@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Riwayat | Smart Trash Bin</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Styles global -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="main-container">
+    <!-- SIDEBAR (include) -->
+    <div data-include="components/sidebar.html"></div>
+
+    <!-- KONTEN -->
+    <main class="content" id="content">
+      <!-- HEADER KHUSUS RIWAYAT -->
+      <header class="dashboard-header show">
+        <div class="header-text">
+          <h1>Riwayat Pengosongan Tempat Sampah</h1>
+          <p>Smart monitoring for cleaner environment</p>
+        </div>
+        <div class="notif">
+          <i class="fa-solid fa-bell"></i>
+          <!-- Tidak ada angka notif -->
+        </div>
+      </header>
+
+      <!-- TABEL RIWAYAT -->
+      <section class="table-card">
+        <h5 class="section-title section-title-left">Daftar Riwayat</h5>
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nama</th>
+              <th>Lantai</th>
+              <th>Waktu</th>
+              <th>Petugas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>TS-1001</td><td>Tempat Sampah C</td><td>Lantai 1</td><td>05 November 2025, 00:52</td><td>Wildan</td></tr>
+            <tr><td>TS-1002</td><td>Tempat Sampah E</td><td>Lantai 2</td><td>04 November 2025, 05:05</td><td>Dika</td></tr>
+            <tr><td>TS-1003</td><td>Tempat Sampah C</td><td>Lantai 1</td><td>03 November 2025, 02:12</td><td>Dicky</td></tr>
+            <tr><td>TS-1004</td><td>Tempat Sampah D</td><td>Lantai 3</td><td>02 November 2025, 22:13</td><td>Cevi</td></tr>
+            <tr><td>TS-1005</td><td>Tempat Sampah A</td><td>Lantai 2</td><td>01 November 2025, 05:08</td><td>Dhani</td></tr>
+            <tr><td>TS-1006</td><td>Tempat Sampah B</td><td>Lantai 3</td><td>31 Oktober 2025, 19:01</td><td>Morin</td></tr>
+          </tbody>
+        </table>
+      </section>
+    </main>
+  </div>
+
+  <!-- FOOTER (include) -->
+  <div data-include="components/footer.html"></div>
+
+  <!-- Include loader + script global -->
+  <script src="include.js"></script>
+  <script src="script.js"></script>
+
+  <!-- Sinkron tema + tandai menu aktif -->
+  <script>
+    document.addEventListener('componentsLoaded', () => {
+      // Dark mode sinkron
+      const toggle = document.getElementById('toggle-theme');
+      const saved = localStorage.getItem('stb-theme');
+      if (saved === 'dark') {
+        document.body.classList.add('dark-mode');
+        if (toggle) toggle.checked = true;
+      }
+      toggle?.addEventListener('change', () => {
+        const dark = toggle.checked;
+        document.body.classList.toggle('dark-mode', dark);
+        localStorage.setItem('stb-theme', dark ? 'dark' : 'light');
+      });
+
+      // Pastikan menu "Riwayat" aktif
+      document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+      document.getElementById('link-riwayat')?.classList.add('active');
+    });
+  </script>
+</body>
+</html>

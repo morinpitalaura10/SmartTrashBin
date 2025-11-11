@@ -1,0 +1,45 @@
+<aside class="sidebar">
+  <div class="logo">
+    <!-- pastikan nama file sesuai: assets/logo.png (huruf kecil) -->
+    <img src="assets/logo.png" alt="Smart Trash Bin" class="site-logo">
+  </div>
+
+  <ul class="menu">
+    <li>
+      <a href="index.html" id="link-dashboard">
+        <i class="fa-solid fa-table-columns"></i> Dashboard
+      </a>
+    </li>
+    <li>
+      <a href="riwayat.html" id="link-riwayat">
+        <i class="fa-solid fa-clock-rotate-left"></i> Riwayat
+      </a>
+    </li>
+    <li>
+      <a href="grafik.html" id="link-grafik">
+        <i class="fa-solid fa-chart-column"></i> Grafik
+      </a>
+    </li>
+
+    <li class="mode-toggle">
+      <label>
+        <input type="checkbox" id="toggle-theme">
+        <i class="fa-solid fa-moon"></i> Dark Mode
+      </label>
+    </li>
+  </ul>
+</aside>
+
+<!-- Otomatis tandai menu aktif setelah include selesai dimuat -->
+<script>
+  document.addEventListener('componentsLoaded', () => {
+    const page = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+    const map = {
+      'index.html': 'link-dashboard',
+      'riwayat.html': 'link-riwayat',
+      'grafik.html': 'link-grafik'
+    };
+    document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+    document.getElementById(map[page] || 'link-dashboard')?.classList.add('active');
+  });
+</script>
