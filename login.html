@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login | Smart Trash Bin</title>
+
+  <!-- Font Awesome (ikon tombol Masuk) -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Styles Global -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body class="auth-body with-photo">
+  <div class="auth-wrap">
+    <div class="auth-card" id="card">
+      <div class="auth-brand">
+        <img src="assets/logo.png" alt="Smart Trash Bin" class="auth-logo" />
+      </div>
+
+      <h1 class="auth-title">Masuk ke Smart Trash Bin</h1>
+      <p class="auth-sub">Pantau dan kelola tempat sampah secara real-time</p>
+
+      <form id="loginForm" novalidate>
+        <!-- USERNAME -->
+        <div class="auth-field">
+          <label for="username">Username</label>
+          <input id="username" type="text" class="auth-input"
+                 placeholder="adminstb" autocomplete="username" required />
+          <div id="userErr" class="auth-error" style="display:none"></div>
+        </div>
+
+        <!-- PASSWORD -->
+        <div class="auth-field">
+          <label for="password">Password</label>
+          <input id="password" type="password" class="auth-input"
+                 placeholder="••••••••" autocomplete="current-password" required />
+          <div id="passErr" class="auth-error" style="display:none"></div>
+        </div>
+
+        <div class="auth-actions">
+          <label class="auth-check">
+            <input type="checkbox" id="showPass" /> <span>Tampilkan Password</span>
+          </label>
+          <label class="auth-check">
+            <input type="checkbox" id="remember" /> <span>Ingat saya</span>
+          </label>
+        </div>
+
+        <button class="auth-btn" type="submit">
+          <i class="fa-solid fa-right-to-bracket"></i> Masuk
+        </button>
+      </form>
+
+      <!-- Loading overlay -->
+      <div class="auth-loading" id="loading">
+        <div class="auth-spinner"></div>
+        <span>Memeriksa kredensial...</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==== Toggle tampilkan password ====
+    const passEl = document.getElementById('password');
+    const showPass = document.getElementById('showPass');
+    showPass.addEventListener('change', () => {
+      passEl.type = showPass.checked ? 'text' : 'password';
+    });
+
+    // ==== LOGIN SIMULASI ====
+    const form     = document.getElementById('loginForm');
+    const loading  = document.getElementById('loading');
+    const userErr  = document.getElementById('userErr');
+    const passErr  = document.getElementById('passErr');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const username = document.getElementById('username').value.trim();
+      const password = passEl.value.trim();
+      const remember = document.getElementById('remember').checked;
+
+      // Bersihkan error dulu
+      userErr.style.display = 'none';
+      passErr.style.display = 'none';
+      userErr.textContent = '';
+      passErr.textContent = '';
+
+      // Validasi kosong
+      if (!username) {
+        userErr.textContent = 'Username tidak boleh kosong.';
+        userErr.style.display = 'block';
+        return;
+      }
+      if (!password) {
+        passErr.textContent = 'Password tidak boleh kosong.';
+        passErr.style.display = 'block';
+        return;
+      }
+
+      // Tampilkan loading
+      loading.classList.add('active');
+
+      // Kredensial demo
+      const validUser = 'adminstb';
+      const validPass = 'admin123';
+
+      setTimeout(() => {
+        loading.classList.remove('active');
+
+        // Cek spesifik
+        if (username !== validUser) {
+          userErr.textContent = 'Username salah.';
+          userErr.style.display = 'block';
+          return;
+        }
+        if (password !== validPass) {
+          passErr.textContent = 'Password salah.';
+          passErr.style.display = 'block';
+          return;
+        }
+
+        // Sukses
+        localStorage.setItem('stb-auth', JSON.stringify({
+          username,
+          remember,
+          ts: Date.now()
+        }));
+        window.location.href = 'index.html';
+      }, 800);
+    });
+  </script>
+</body>
+</html>

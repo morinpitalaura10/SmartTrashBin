@@ -356,5 +356,355 @@ p  { text-align: center; font-size: 12px; color: #3c3b3b; margin-top: 5px; margi
 .dark-mode .chart-legend .item {
   color: #e5e7eb;
 }
+/* ====== Auth (Login) ====== */
+.auth-wrap{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#f5f7fa;
+  padding:24px;
+}
+.dark-mode .auth-wrap{ background:#121212; }
+
+.auth-card{
+  width: min(420px, 100%);
+  background:#ffffff;
+  border-radius:16px;
+  padding:28px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+}
+.dark-mode .auth-card{ background:#1f1f1f; }
+
+.auth-title {
+  text-align: center;
+  font-size: 10px;       /* sebelumnya 22px */
+  font-weight: 700;      /* sebelumnya 800, biar lebih halus */
+  margin: 4px 0 2px;     /* kecilin spasi atas bawah */
+  line-height: 1.3;      /* biar rapi */
+}
+
+.auth-sub {
+  text-align: center;
+  color: #6b7280;
+  margin: 0 0 12px;      /* dikit lebih kecil dari 18px */
+  font-size: 10px;       /* lebih kecil biar pas sama title */
+  line-height: 1.3;
+}
+
+.auth-input{
+  width:100%;
+  padding:12px 14px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  outline:none;
+  background:#fff;
+}
+.auth-input:focus{
+  border-color:#0b4f3f;
+  box-shadow:0 0 0 3px rgba(11,79,63,.12);
+}
+.dark-mode .auth-input{ background:#121212; border-color:#2b2b2b; color:#e9e9e9; }
+
+.input-row{ display:flex; gap:10px; }
+
+.auth-actions{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin:12px 0 4px;
+}
+
+.auth-btn{
+  width:100%;
+  background:#0b4f3f;
+  color:#fff;
+  border:none;
+  border-radius:12px;
+  padding:12px 14px;
+  font-weight:700;
+  cursor:pointer;
+}
+.auth-btn:hover{ background:#0a3e32; }
+
+.auth-error{ margin-top:10px; color:#b91c1c; font-weight:600; display:none; }
+
+.show-toggle{ display:flex; align-items:center; gap:8px; font-size:14px; }
+
+/* ===== Tombol Logout di Sidebar ===== */
+.logout-btn-wrap {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.logout-btn {
+  background: #b91c1c;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  transition: background 0.25s;
+}
+
+.logout-btn:hover {
+  background: #991b1b;
+}
+
+.dark-mode .logout-btn {
+  background: #ef4444;
+  color: #fff;
+}
+
+.dark-mode .logout-btn:hover {
+  background: #dc2626;
+}
+/* =========================
+   LOGIN
+   ========================= */
+.auth-body{
+  background:#f5f8f7;
+  min-height:100vh;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Poppins',sans-serif;
+}
+.auth-wrap{animation:fadeIn .8s ease-out}
+.auth-card{
+  width:420px;max-width:92%;
+  background:#fff;border-radius:16px;
+  padding:28px 26px 18px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+  position:relative;overflow:hidden;
+  animation:slideUp .9s cubic-bezier(.25,.8,.25,1);
+}
+.auth-brand{display:flex;justify-content:center;margin-bottom:8px}
+.auth-logo{height:105px;width:auto;object-fit:contain}
+
+.auth-title{
+  font-size:13px;text-align:center;margin:5px 0 2px;font-weight:600;
+}
+.auth-sub{
+  text-align:center;color:#6b7280;margin-bottom:18px;font-size:10px
+}
+
+.auth-field{margin-bottom:12px}
+.auth-field label{display:block;margin-bottom:6px;font-weight:700}
+.auth-input{
+  width:100%;border:1px solid #d1d5db;border-radius:10px;
+  padding:10px 14px;font-size:15px;outline:none;transition:border .2s
+}
+.auth-input:focus{border-color:#065f46;box-shadow:0 0 0 3px rgba(6,95,70,.15)}
+
+.auth-actions{display:flex;justify-content:space-between;align-items:center;margin:6px 0}
+.auth-check{font-size:13px;color:#374151;user-select:none}
+
+.auth-btn{
+  width:100%;border:none;border-radius:12px;background:#065f46;color:#fff;
+  padding:11px 0;font-weight:600;margin-top:14px;cursor:pointer;font-size:15px;
+  display:flex;justify-content:center;align-items:center;gap:8px;
+  transition:background .3s,transform .2s;
+  box-shadow:0 0 12px rgba(6,95,70,.4);animation:glowPulse 2.5s infinite ease-in-out
+}
+.auth-btn:hover{background:#064e3b;transform:translateY(-1px);box-shadow:0 0 18px rgba(6,95,70,.6)}
+
+.auth-error{display:none;margin-top:10px;color:#b91c1c;font-size:13px;text-align:center;font-weight:600}
+
+.auth-loading{
+  position:absolute;inset:0;background:rgba(255,255,255,.86);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-weight:600;font-size:15px;color:#065f46;
+  backdrop-filter:blur(3px);
+  opacity:0;pointer-events:none;transition:opacity .25s ease
+}
+.auth-loading.active{opacity:1;pointer-events:auto}
+.auth-spinner{
+  border:3px solid #d1d5db;border-top-color:#065f46;border-radius:50%;
+  width:30px;height:30px;animation:spin .8s linear infinite;margin-bottom:10px
+}
+
+/* small footer inside login card */
+.auth-card .footer{
+  margin-top:16px;border-top:1px solid #eef1f0;padding-top:10px;
+}
+.auth-card .footer .footer-copy{
+  font-size:13px;color:#6b7280;
+}
+
+/* Animations */
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+@keyframes shake{
+  10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}
+  30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}
+}
+@keyframes glowPulse{
+  0%,100%{box-shadow:0 0 10px rgba(6,95,70,.3)}
+  50%{box-shadow:0 0 22px rgba(6,95,70,.6)}
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Dark mode (optional, kalau login ikut tema) */
+.dark-mode .auth-card{background:#171717;box-shadow:none}
+.dark-mode .auth-title,.dark-mode .auth-sub{color:#e5e7eb}
+.dark-mode .auth-input{background:#111;border-color:#2a2a2a;color:#e5e7eb}
+.dark-mode .auth-input:focus{border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.18)}
+.dark-mode .auth-loading{background:rgba(23,23,23,.86)}
+.dark-mode .auth-card .footer{border-top-color:#2a2a2a}
+.dark-mode .auth-card .footer .footer-copy{color:#9ca3af}
+/* ==== LOGIN BACKGROUND: FOTO + OVERLAY ==== */
+.auth-body.with-photo {
+  background: url('assets/login-bg.jpg') center/cover no-repeat fixed !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.auth-body.with-photo::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.78), rgba(255,255,255,0.88));
+  backdrop-filter: blur(2px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* card login tetap di atas background */
+.auth-body.with-photo .auth-card {
+  position: relative;
+  z-index: 1;
+}
+/* === Login: pakai foto background === */
+.auth-body.with-photo{
+  /* pastikan file & path tepat (huruf kecil/ekstensi sama persis) */
+  background: url('assets/login-bg.jpg') center / cover no-repeat fixed !important;
+}
+
+/* transparankan lapisan yang menutupi body */
+.auth-body.with-photo .auth-wrap{
+  background: transparent !important;
+}
+
+/* (opsional) kasih overlay tipis biar teks tetap kebaca */
+.auth-body.with-photo::after{
+  content:"";
+  position: fixed;
+  inset: 0;
+  /* kurangi opacity biar foto lebih jelas */
+  background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.25));
+  backdrop-filter: blur(1.5px);
+  pointer-events: none;
+}
+/* ===== Login Compact ===== */
+.auth-card{
+  width: 420px;
+  max-width: 92%;
+  border-radius: 14px;
+  padding: 22px 22px 18px;
+  box-shadow: 0 12px 28px rgba(0,0,0,.12);
+}
+
+.auth-logo{ height: 80px; }                 /* logo sedikit lebih kecil */
+.auth-title{
+  font-size: 18px;                           /* judul lebih ringkas */
+  margin: 8px 0 4px;
+  font-weight: 700;
+  text-align: center;
+}
+.auth-sub{
+  font-size: 12px;                           /* subjudul lebih kecil */
+  color:#6b7280;
+  margin: 0 0 14px;
+  text-align: center;
+}
+
+/* Field wrapper */
+.auth-field{ margin-bottom: 10px; }          /* jarak antar field dipadatkan */
+.auth-field label{
+  font-size: 12px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  display:block;
+}
+
+/* INPUT: kecilin font + padding */
+.auth-input{
+  width:100%;
+  border:1px solid #d1d5db;
+  border-radius: 10px;
+  padding: 8px 12px;                         /* dulu 10px 14px */
+  font-size: 13px;                           /* dulu 15px */
+  line-height: 1.4;
+  outline:none;
+  background:#eef5ff;                        /* tone lembut */
+  transition: border .2s, box-shadow .2s;
+}
+.auth-input:focus{
+  border-color:#065f46;
+  box-shadow:0 0 0 3px rgba(6,95,70,.12);
+}
+
+/* checkbox & opsi */
+.auth-actions{
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  margin: 8px 0 4px;
+}
+.auth-check{ font-size: 12px; color:#374151; }
+
+/* tombol */
+.auth-btn{
+  width:100%;
+  padding: 10px 12px;                        /* dulu 12px 14px */
+  font-size: 14px;                           /* dulu 15px */
+  border:none; border-radius: 12px;
+  background:#065f46; color:#fff;
+  font-weight: 700;
+  display:flex; align-items:center; justify-content:center; gap:8px;
+  cursor:pointer;
+  transition: transform .15s, box-shadow .2s, background .2s;
+  box-shadow: 0 6px 14px rgba(6,95,70,.25);
+}
+.auth-btn:hover{ background:#064e3b; transform: translateY(-1px); }
+.auth-btn:active{ transform: translateY(0); box-shadow: 0 3px 10px rgba(6,95,70,.2); }
+
+/* error text */
+.auth-error{
+  display:none;
+  margin-top:10px;
+  color:#b91c1c;
+  font-size: 12px;                           /* lebih kecil */
+  text-align:center;
+  font-weight:600;
+}
+
+/* loading overlay (ikutin card compact) */
+.auth-loading{
+  position:absolute; inset:0;
+  background: rgba(255,255,255,.9);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+  border-radius: 14px;
+}
+.auth-loading.active{ opacity:1; pointer-events:auto; }
+.auth-spinner{
+  border: 3px solid #d1d5db; border-top-color:#065f46; border-radius:50%;
+  width: 24px; height: 24px; animation: spin .8s linear infinite; margin-bottom:8px;
+}
+
+/* responsif kecil */
+@media (max-width: 480px){
+  .auth-card{ padding:18px 16px 14px; }
+  .auth-title{ font-size: 17px; }
+  .auth-input{ font-size: 12.5px; padding: 8px 11px; }
+  .auth-btn{ font-size: 13.5px; padding: 9px 12px; }
+}
 
 /* ======== END GRAFIK STYLE ======== */

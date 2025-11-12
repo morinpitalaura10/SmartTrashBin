@@ -1,6 +1,6 @@
-// script.js — hanya SPA di index.html; grafik.html pakai halaman terpisah
+// script.js — SPA hanya untuk index.html; grafik.html & riwayat.html adalah halaman terpisah
 document.addEventListener('componentsLoaded', () => {
-  // ===== Dark mode di semua halaman =====
+  // ====== Dark mode di semua halaman ======
   const themeToggle = document.getElementById('toggle-theme');
   const saved = localStorage.getItem('stb-theme');
   if (saved === 'dark') {
@@ -13,10 +13,8 @@ document.addEventListener('componentsLoaded', () => {
     localStorage.setItem('stb-theme', dark ? 'dark' : 'light');
   });
 
-  // ===== Deteksi halaman saat ini =====
+  // ====== Tandai menu aktif berdasarkan halaman ======
   const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-
-  // Set active menu berdasarkan halaman
   function markActiveByPage() {
     document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
     if (current.includes('index') || current === '') {
@@ -29,13 +27,13 @@ document.addEventListener('componentsLoaded', () => {
   }
   markActiveByPage();
 
-  // ===== SPA hanya untuk index.html =====
-  if (!(current.includes('index') || current === '')) {
-    // Bukan index.html → selesai (biarkan grafik.html/riwayat.html jalan sendiri)
-    return;
-  }
+  // ====== Bukan index.html? selesai (biarkan halaman mandiri bekerja) ======
+  if (!(current.includes('index') || current === '')) return;
 
-  // --- Index.html: siapkan container konten dinamis
+  // =========================
+  // ====== Index (SPA) ======
+  // =========================
+
   const content = document.getElementById('content');
   let page = document.getElementById('page');
   if (!page) {
@@ -44,7 +42,17 @@ document.addEventListener('componentsLoaded', () => {
     content.appendChild(page);
   }
 
-  // ===== Render Dashboard =====
+  // ---- Aturan status sesuai threshold:
+  // < 50%  => Aman
+  // 50–74% => Hampir Penuh
+  // ≥ 75%  => Penuh
+  function getStatusFromPercent(p) {
+    if (p >= 75) return { label: 'Penuh', cls: 'badge-penuh' };
+    if (p >= 50) return { label: 'Hampir Penuh', cls: 'badge-hampir' };
+    return { label: 'Aman', cls: 'badge-aman' };
+  }
+
+  // ---- Render Dashboard
   function renderDashboard() {
     page.innerHTML = `
       <div class="cards">
@@ -82,59 +90,119 @@ document.addEventListener('componentsLoaded', () => {
             </tr>
           </thead>
           <tbody>
-            <tr><td>B001</td><td>Bin Utama</td><td>Lantai 1</td><td>Dekat Pintu Masuk</td>
+            <tr>
+              <td>B001</td><td>Bin Utama</td><td>Lantai 1</td><td>Dekat Pintu Masuk</td>
               <td class="kapasitas">
                 <div class="progress"><div class="progress-bar" style="width:85%"></div></div>
                 <span class="progress-text">85%</span>
               </td>
-              <td><span class="badge badge-hampir">Hampir Penuh</span></td>
+              <td><!-- status akan diisi ulang via refreshStatuses() --></td>
               <td><button class="btn-kosongkan">Kosongkan</button></td>
             </tr>
-            <tr><td>B002</td><td>Bin Koridor</td><td>Lantai 2</td><td>Ujung Koridor Utara</td>
+            <tr>
+              <td>B002</td><td>Bin Koridor</td><td>Lantai 2</td><td>Ujung Koridor Utara</td>
               <td class="kapasitas">
-                <div class="progress"><div class="progress-bar" style="width:15%"></div></div>
-                <span class="progress-text">15%</span>
+                <div class="progress"><div class="progress-bar" style="width:58%"></div></div>
+                <span class="progress-text">58%</span>
               </td>
-              <td><span class="badge badge-aman">Aman</span></td>
+              <td></td>
               <td><button class="btn-kosongkan">Kosongkan</button></td>
             </tr>
-            <tr><td>B003</td><td>Bin Dapur</td><td>Lantai 1</td><td>Area Dapur Karyawan</td>
+            <tr>
+              <td>B003</td><td>Bin Dapur</td><td>Lantai 1</td><td>Area Dapur Karyawan</td>
               <td class="kapasitas">
                 <div class="progress"><div class="progress-bar" style="width:8%"></div></div>
                 <span class="progress-text">8%</span>
               </td>
-              <td><span class="badge badge-aman">Aman</span></td>
+              <td></td>
               <td><button class="btn-kosongkan">Kosongkan</button></td>
             </tr>
-            <tr><td>B004</td><td>Bin Ruang Rapat</td><td>Lantai 3</td><td>Dekat Ruang Anggrek</td>
+            <tr>
+              <td>B004</td><td>Bin Ruang Rapat</td><td>Lantai 3</td><td>Dekat Ruang Anggrek</td>
               <td class="kapasitas">
                 <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
                 <span class="progress-text">90%</span>
               </td>
-              <td><span class="badge badge-penuh">Penuh</span></td>
+              <td></td>
               <td><button class="btn-kosongkan">Kosongkan</button></td>
             </tr>
-            <tr><td>B005</td><td>Bin Lobby</td><td>Lantai Dasar</td><td>Samping Lift Utama</td>
+            <tr>
+              <td>B005</td><td>Bin Lobby</td><td>Lantai Dasar</td><td>Samping Lift Utama</td>
               <td class="kapasitas">
                 <div class="progress"><div class="progress-bar" style="width:17%"></div></div>
                 <span class="progress-text">17%</span>
               </td>
-              <td><span class="badge badge-aman">Aman</span></td>
+              <td></td>
               <td><button class="btn-kosongkan">Kosongkan</button></td>
             </tr>
           </tbody>
         </table>
       </section>
     `;
+
+    // Setelah render, sinkronkan status & kartu ringkasan
+    refreshStatuses();
+    recomputeCards();
   }
 
-  // ===== Ganti menu aktif (khusus index) =====
-  function setActiveLink(linkId) {
-    document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
-    document.getElementById(linkId)?.classList.add('active');
+  // ---- Baca persentase dari baris
+  function getPercentFromRow(tr) {
+    const pctText = tr.querySelector('.progress-text')?.textContent || '0%';
+    return parseInt(pctText, 10) || 0;
   }
 
-  // ===== Event menu di index =====
+  // ---- Tulis status per-baris sesuai persentase
+  function refreshStatuses() {
+    document.querySelectorAll('.data-table tbody tr').forEach(tr => {
+      const p = getPercentFromRow(tr);
+      const s = getStatusFromPercent(p);
+      const statusCell = tr.children[5]; // kolom "Status"
+      if (statusCell) {
+        statusCell.innerHTML = `<span class="badge ${s.cls}">${s.label}</span>`;
+      }
+    });
+  }
+
+  // ---- Hitung ulang kartu ringkasan (total/penuh/kosong)
+  function recomputeCards() {
+    const rows = Array.from(document.querySelectorAll('.data-table tbody tr'));
+    const total = rows.length;
+    let penuh = 0;
+    let kosong = 0;
+
+    rows.forEach(tr => {
+      const p = getPercentFromRow(tr);
+      if (p >= 75) penuh += 1;
+      if (p === 0)  kosong += 1;
+    });
+
+    const totalEl  = document.querySelector('.card-total .value');
+    const penuhEl  = document.querySelector('.card-penuh .value');
+    const kosongEl = document.querySelector('.card-kosong .value');
+    if (totalEl)  totalEl.textContent  = total;
+    if (penuhEl)  penuhEl.textContent  = penuh;
+    if (kosongEl) kosongEl.textContent = kosong;
+  }
+
+  // ---- Delegasi klik untuk tombol "Kosongkan"
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.btn-kosongkan');
+    if (!btn) return;
+
+    const tr = btn.closest('tr');
+    const bar = tr.querySelector('.progress-bar');
+    const txt = tr.querySelector('.progress-text');
+
+    // Set 0%
+    if (bar) bar.style.width = '0%';
+    if (txt) txt.textContent = '0%';
+
+    // Update status baris + kartu-kartu
+    refreshStatuses();
+    recomputeCards();
+  });
+
+  // ===== Event menu (khusus index) =====
   // Dashboard
   document.getElementById('link-dashboard')?.addEventListener('click', (e) => {
     e.preventDefault();
@@ -145,10 +213,11 @@ document.addEventListener('componentsLoaded', () => {
     header?.querySelector('.notif-badge') && (header.querySelector('.notif-badge').textContent = '');
 
     renderDashboard();
-    setActiveLink('link-dashboard');
+    document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+    document.getElementById('link-dashboard')?.classList.add('active');
   });
 
-  // Riwayat
+  // Riwayat (SPA section sederhana—kalau kamu pakai riwayat.html terpisah, boleh di-skip)
   document.getElementById('link-riwayat')?.addEventListener('click', (e) => {
     e.preventDefault();
 
@@ -178,12 +247,85 @@ document.addEventListener('componentsLoaded', () => {
         </table>
       </section>
     `;
-    setActiveLink('link-riwayat');
+
+    document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+    document.getElementById('link-riwayat')?.classList.add('active');
   });
 
-  // Penting: JANGAN preventDefault link-grafik — biarkan ke grafik.html
-  // document.getElementById('link-grafik')...  <-- dihapus
+  // Penting: link Grafik biarkan pindah halaman (grafik.html)
+  // document.getElementById('link-grafik') ... (JANGAN preventDefault)
 
-  // Render awal dashboard di index
+  // ---- Render awal dashboard
   renderDashboard();
 });
+// ============================
+// LOGIN PAGE ONLY
+// ============================
+(function () {
+  const page = (location.pathname.split('/').pop() || '').toLowerCase();
+  if (page !== 'login.html') return;
+
+  // Dummy cred
+  const VALID_EMAIL = 'admin@stb.com';
+  const VALID_PASS  = 'admin123';
+
+  const form    = document.getElementById('loginForm');
+  const email   = document.getElementById('email');
+  const pass    = document.getElementById('password');
+  const show    = document.getElementById('showPass');
+  const remember= document.getElementById('remember');
+  const err     = document.getElementById('err');
+  const loading = document.getElementById('loading');
+  const card    = document.getElementById('card');
+
+  // restore remembered email
+  const remembered = localStorage.getItem('stb-remember-email');
+  if (remembered) { email.value = remembered; remember.checked = true; }
+
+  // toggle show password
+  show?.addEventListener('change', () => {
+    pass.type = show.checked ? 'text' : 'password';
+  });
+
+  function showError(msg){
+    err.style.display = 'block';
+    err.textContent = msg;
+    card.style.animation = 'shake .5s';
+    setTimeout(() => card.style.animation = '', 500);
+  }
+
+  form?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    err.style.display = 'none';
+
+    const em = (email.value || '').trim();
+    const pw = (pass.value || '').trim();
+
+    if (!em || !pw) {
+      showError('Email / kata sandi belum diisi.');
+      return;
+    }
+    // very simple email check
+    const okEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em);
+    if (!okEmail) {
+      showError('Format email tidak valid.');
+      return;
+    }
+    // validate dummy cred
+    if (em !== VALID_EMAIL || pw !== VALID_PASS) {
+      showError('Email atau kata sandi salah.');
+      return;
+    }
+
+    // remember
+    if (remember.checked) localStorage.setItem('stb-remember-email', em);
+    else localStorage.removeItem('stb-remember-email');
+
+    // auth flag
+    localStorage.setItem('stb-auth', '1');
+
+    // show loading then go to dashboard
+    loading.classList.add('active');
+    setTimeout(() => location.href = 'index.html', 900);
+  });
+})();

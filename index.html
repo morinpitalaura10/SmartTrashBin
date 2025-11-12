@@ -4,6 +4,16 @@
   <meta charset="UTF-8" />
   <title>Smart Trash Bin Dashboard</title>
 
+  <!-- ====== LOGIN GUARD ====== -->
+  <script>
+    (function () {
+      // Kalau belum login, arahkan ke login.html
+      if (!localStorage.getItem('stb-auth')) {
+        location.href = 'login.html';
+      }
+    })();
+  </script>
+
   <!-- Font Awesome -->
   <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -39,6 +49,7 @@
     document.addEventListener("componentsLoaded", () => {
       document.querySelector(".dashboard-header")?.classList.add("show");
 
+      // Tema dark/light mode
       const toggle = document.getElementById("toggle-theme");
       const saved = localStorage.getItem("stb-theme");
       if (saved === "dark") {

@@ -81,16 +81,16 @@
       // ================== DATA DUMMY DARI DASHBOARD ==================
       // Sesuaikan kalau nanti mau ambil dari API/DB.
       const bins = [
-        { id: 'B001', name: 'Bin Utama',       floor: 'Lantai 1',  capacity: 85 }, // Hampir Penuh
-        { id: 'B002', name: 'Bin Koridor',     floor: 'Lantai 2',  capacity: 15 }, // Aman
+        { id: 'B001', name: 'Bin Utama',       floor: 'Lantai 1',  capacity: 85 }, // Penuh
+        { id: 'B002', name: 'Bin Koridor',     floor: 'Lantai 2',  capacity: 58 }, // Hampir Penuh
         { id: 'B003', name: 'Bin Dapur',       floor: 'Lantai 1',  capacity:  8 }, // Aman
         { id: 'B004', name: 'Bin Ruang Rapat', floor: 'Lantai 3',  capacity: 90 }, // Penuh
         { id: 'B005', name: 'Bin Lobby',       floor: 'Lantai Dasar', capacity: 17 } // Aman
       ];
 
       // Aturan klasifikasi status (sama seperti di tabel):
-      // >= 90 -> Penuh, 70..89 -> Hampir Penuh, lainnya -> Aman
-      const classify = (pct) => pct >= 90 ? 'Penuh' : (pct >= 70 ? 'Hampir Penuh' : 'Aman');
+      // >= 75 -> Penuh, 50..75 -> Hampir Penuh, lainnya -> Aman
+      const classify = (pct) => pct >= 75 ? 'Penuh' : (pct >= 50 ? 'Hampir Penuh' : 'Aman');
 
       // Hitung distribusi
       let penuh = 0, hampir = 0, aman = 0;
