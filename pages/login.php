@@ -1,6 +1,6 @@
 <?php
 session_start();
-$error = $_SESSION['login_error'] ?? '';
+$login_error = $_SESSION['login_error'] ?? '';
 unset($_SESSION['login_error']);
 ?>
 <!DOCTYPE html>
@@ -36,11 +36,20 @@ unset($_SESSION['login_error']);
       <p class="auth-sub">Pantau dan kelola tempat sampah secara real-time</p>
 
       <!-- error dari backend (kalau login salah) -->
-      <?php if ($error): ?>
-        <div class="auth-error" style="margin-bottom:10px; text-align:center;">
-          <?php echo htmlspecialchars($error); ?>
+      <?php if ($login_error): ?>
+        <div style="
+            background-color:#ffdddd;
+            color:#b30000;
+            border:1px solid #ff5c5c;
+            padding:10px;
+            border-radius:5px;
+            margin-bottom:15px;
+            font-size:14px;
+        ">
+          <?= htmlspecialchars($login_error) ?>
         </div>
       <?php endif; ?>
+
 
       <!-- FORM LOGIN: pakai desain asli, tapi sekarang kirim ke login_process.php -->
       <form id="loginForm" method="POST" action="login_process.php" novalidate>

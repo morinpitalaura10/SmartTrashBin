@@ -1,6 +1,8 @@
 <?php
 session_start();
 require '../includes/koneksi.php'; // pastikan koneksi bikin $conn (mysqli)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 // Kalau bukan request POST, balikin ke form login
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
