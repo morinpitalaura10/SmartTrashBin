@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Smart Trash Bin</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+  <!-- CSS Landing Page -->
+  <!-- kalau styles.css ada di root project, ini sudah benar -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="hero">
+    <div class="hero-inner">
+      <!-- HEADER -->
+      <header class="hero-header">
+        <div class="logo-box">
+          <img src="assets/logo.png" alt="Logo Smart Trash Bin" />
+        </div>
+
+        <!-- arahkan ke halaman login -->
+        <a href="login.html" class="login-link">Login</a>
+        <!-- kalau login kamu pakai PHP, ganti jadi: href="pages/login.php" -->
+      </header>
+
+      <!-- CONTENT UTAMA -->
+      <main class="hero-content">
+        <h1 class="hero-title">
+          Selamat Datang di Website<br />
+          Smart Trashbin
+        </h1>
+
+        <div class="hero-card">
+          Smart Trash Bin adalah sistem tempat sampah pintar yang dirancang untuk
+          memantau dan mengelola volume sampah secara otomatis. Dengan teknologi
+          sensor, Smart Trash Bin membantu pengguna memantau kapasitas tong secara
+          real-time, menjadikan proses pengangkutan lebih efisien serta menjaga
+          kebersihan lingkungan. Inovasi ini menjadi langkah nyata menuju kampus
+          yang lebih cerdas, bersih, dan berkelanjutan.
+        </div>
+
+        <button class="hero-button" onclick="window.location.href='index.html'">
+          Pelajari Lebih Lanjut
+        </button>
+        <!-- tombol di atas aku arahkan ke index.html (dashboard) -->
+      </main>
+    </div>
+
+    <!-- FOOTER (dipindah ke luar .hero-inner supaya full width) -->
+    <footer class="footer">
+      <p>© 2025 <strong>Smart Trash Bin</strong>. Semua hak cipta dilindungi.</p>
+      <p>Developed by <strong>Smart Trash Bin Team</strong> — Program Studi Informatika, UIN Siber Syekh Nurjati
+        Cirebon.</p>
+      <p>Versi Sistem: <strong>v1.0.0</strong> | Terakhir diperbarui: <strong>11 November 2025</strong></p>
+      <p><a href="#">Kebijakan Privasi</a> | <a href="#">Syarat & Ketentuan</a></p>
+    </footer>
+  </div>
+</body>
+
+</html>
