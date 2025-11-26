@@ -18,7 +18,7 @@ $pesan = $_GET['pesan'] ?? "";
         <div class="alert alert-success">Data tempat sampah berhasil ditambahkan!</div>
     <?php endif; ?>
 
-    <form action="proses_tempat_sampah.php" method="POST" class="bg-secondary p-4 rounded">
+    <form method="POST" method="proses_tempat_sampah.php" class="bg-secondary p-4 rounded">
 
         <div class="mb-3">
             <label class="form-label">ID Tempat Sampah</label>
