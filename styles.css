@@ -1514,4 +1514,114 @@ body {
     width: 100%;
     max-width: 260px;
   }
+/* ======== AUTH / LOGIN ROLE PAGE ======== */
+
+.auth-body {
+    font-family: "Poppins", sans-serif;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.auth-hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.auth-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+        linear-gradient(180deg, rgba(0,0,0,0.4), rgba(0,0,0,0.25)),
+        url("assets/login-bg.jpg") center/cover no-repeat;
+    filter: blur(1px);
+    transform: scale(1.03);
+    z-index: -1;
+}
+
+/* kartu putih di tengah */
+.auth-card {
+    width: 90%;
+    max-width: 520px;
+    background: #ffffff;
+    border-radius: 28px;
+    padding: 40px 36px 44px;
+    box-shadow: 0 18px 40px rgba(0,0,0,0.35);
+    text-align: center;
+}
+
+/* logo di atas */
+.auth-logo img {
+    height: 70px;
+    width: auto;
+    margin-bottom: 12px;
+}
+
+/* teks judul & subtitle */
+.auth-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2933;
+    margin-bottom: 4px;
+}
+
+.auth-subtitle {
+    font-size: 13px;
+    color: #9aa5b1;
+    margin-bottom: 26px;
+}
+
+/* tombol role */
+.auth-role-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-top: 10px;
+}
+
+.role-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 999px;
+    border: 1px solid #b0b9c5;
+    background: #e6edf7;
+    font-size: 15px;
+    font-weight: 700;
+    color: #111827;
+    text-decoration: none;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.12s ease;
+}
+
+.role-btn:hover {
+    background: #dde6f3;
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+}
+
+.role-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.22);
+}
+
+/* responsif */
+@media (max-width: 480px) {
+    .auth-card {
+        padding: 30px 22px 34px;
+        border-radius: 22px;
+    }
+
+    .auth-title {
+        font-size: 19px;
+    }
+
+    .role-btn {
+        font-size: 14px;
+    }
+}
 }
