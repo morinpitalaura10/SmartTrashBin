@@ -18,7 +18,7 @@ $pesan = $_GET['pesan'] ?? "";
         <div class="alert alert-success">Data User OB berhasil ditambahkan!</div>
     <?php endif; ?>
 
-    <form action="proses_user_ob.php" method="POST" class="bg-secondary p-4 rounded">
+    <form method="POST" action="proses_user_ob.php" class="bg-secondary p-4 rounded">
 
         <div class="mb-3">
             <label class="form-label">Nama Lengkap</label>
@@ -38,8 +38,8 @@ $pesan = $_GET['pesan'] ?? "";
         <div class="mb-3">
             <label class="form-label">Role</label>
             <select name="role" class="form-select" required>
-                <option value="OB">OB</option>
-                <option value="Admin">Admin</option>
+                <option value="OB">ob</option>
+                <option value="Admin">admin</option>
             </select>
         </div>
 

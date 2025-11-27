@@ -1,6 +1,8 @@
 <?php
 session_start();
-require '../includes/koneksi.php'; // pastikan file ini bikin variabel $conn (mysqli)
+require '../includes/koneksi.php'; // pastikan koneksi bikin $conn (mysqli)
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 // Kalau bukan request POST, balikin ke form login
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -20,12 +22,22 @@ if ($username === '' || $password === '') {
 }
 
 // Ambil user dari database berdasarkan username
-$sql  = "SELECT id_user, nama, username, password, role FROM users WHERE username = ?";
+$sql  = "SELECT id_user, nama, username, password, role 
+         FROM users 
+         WHERE username = ?";
 $stmt = $conn->prepare($sql);
+
+if (!$stmt) {
+    $_SESSION['login_error'] = 'Terjadi kesalahan pada server.';
+    header('Location: login.php');
+    exit;
+}
+
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $result = $stmt->get_result();
 $user   = $result->fetch_assoc();
+$stmt->close();
 
 // Cek user ada atau nggak
 if (!$user) {
@@ -34,20 +46,20 @@ if (!$user) {
     exit;
 }
 
+// Cek password
 $stored = $user['password'];
 $valid  = false;
 
-// Jika password di DB dalam bentuk hash (pakai password_hash)
+// Kalau di DB sudah disimpan dalam bentuk hash (password_hash)
 if (password_verify($password, $stored)) {
     $valid = true;
 }
 
-// Kalau ternyata di DB masih plain text (misal: admin123 langsung)
+// OPTIONAL: fallback kalau dulu pernah simpan plain text
 if ($password === $stored) {
     $valid = true;
 }
 
-// Kalau password tetap tidak valid
 if (!$valid) {
     $_SESSION['login_error'] = 'Username atau password salah.';
     header('Location: login.php');
@@ -58,21 +70,18 @@ if (!$valid) {
 $_SESSION['logged_in'] = true;
 $_SESSION['id_user']   = $user['id_user'];
 $_SESSION['nama']      = $user['nama'];
-$_SESSION['role']      = $user['role'];
+$_SESSION['role']      = $user['role']; // 'admin' atau 'ob'
 
 // Arahkan sesuai role
-$role = $user['role'];
-
-if ($role === 'admin') {
-    // admin -> dashboard admin
+if ($user['role'] === 'admin') {
     header('Location: dashboard_admin.php');
     exit;
-} elseif ($role === 'ob') {
-    // OB -> dashboard OB
+} elseif ($user['role'] === 'ob') {
     header('Location: dashboard_ob.php');
     exit;
 } else {
-    // role lain (kalau ada) -> dashboard umum
-    header('Location: dashboard.php');
+    // Kalau ada role lain, sementara balikin ke login
+    $_SESSION['login_error'] = 'Role user tidak dikenali.';
+    header('Location: login.php');
     exit;
 }
