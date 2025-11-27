@@ -1,0 +1,256 @@
+/* ==== RESET RINGAN ==== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f5f5f5;
+  color: #111827;
+}
+
+/* ==== HEADER LOGO ATAS ==== */
+.about-header {
+  background: #f5f5f5;
+  padding: 16px 0 4px;
+}
+
+.about-header-inner {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.about-logo {
+  height: 48px;
+  width: auto;
+  display: block;
+}
+
+
+/* ==== LAYOUT UTAMA ==== */
+.about-main {
+  padding: 8px 0 40px;   /* sedikit turun karena sudah ada header */
+}
+
+.section {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto 32px;
+  padding: 0 24px;
+}
+
+.card {
+  background: #ffffff;
+  border-radius: 6px;
+  padding: 28px 32px;
+  border: 1px solid #e5e7eb;
+}
+
+/* ==== HERO ===== */
+.hero-card {
+  margin-top: 8px;
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.hero-text h1 {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.3;
+  margin-bottom: 12px;
+}
+
+.hero-text p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+.hero-image img {
+  width: 220px;       /* atur besar-kecilnya gambar tong */
+  height: auto;
+  display: block;
+}
+
+/* ==== TENTANG ==== */
+.card h2 {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.card p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4b5563;
+}
+
+/* ==== TUJUAN PROYEK ==== */
+.section-title-center {
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px 40px;
+}
+
+.feature {
+  text-align: center;
+}
+
+.feature-icon {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid #d1d5db;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+}
+
+.feature-icon img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.feature h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.feature p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ==== CARA KERJA ==== */
+.steps {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.steps li {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 10px 0;
+  border-top: 1px solid #e5e7eb;
+}
+
+.steps li:first-child {
+  border-top: none;
+}
+
+.step-badge {
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: #0b4f3f;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-body h3 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.step-body p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: #4b5563;
+}
+
+/* ==== TIM PENGEMBANG ==== */
+.team-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  justify-content: center;
+  margin-top: 16px;
+}
+
+.member {
+  width: 110px;
+  text-align: center;
+}
+
+.member img {
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  margin-bottom: 6px;
+}
+
+.member p {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 2px;
+}
+
+.member span {
+  font-size: 12px;
+  color: #6b7280;
+}
+
+/* ==== FOOTER ==== */
+.about-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #6b7280;
+  margin-top: 16px;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 900px) {
+  .section {
+    padding: 0 12px;
+  }
+
+  .card {
+    padding: 22px 18px;
+  }
+
+  .hero-inner {
+    flex-direction: column-reverse;
+    text-align: left;
+  }
+
+  .hero-text h1 {
+    font-size: 26px;
+  }
+
+  .hero-image img {
+    width: 180px;
+  }
+
+  .features-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .about-header-inner {
+    padding: 0 12px;
+  }
+}
