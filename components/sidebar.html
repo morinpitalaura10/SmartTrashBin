@@ -54,11 +54,11 @@
     </li>
 
     <!-- Logout -->
-    <li class="logout-btn-wrap" role="none">
-      <button class="logout-btn" type="button" id="btn-logout">
+    <li role="none">
+      <a href="logout.php" id="btn-logout" class="nav-link">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span>Logout</span>
-      </button>
+      </a>
     </li>
   </ul>
 </aside>
@@ -109,13 +109,18 @@
 
   function initLogout() {
     const btn = document.getElementById("btn-logout");
-    btn?.addEventListener("click", () => {
-      if (confirm("Yakin ingin keluar dari akun ini?")) {
+    btn?.addEventListener("click", (e) => {
+      const ok = confirm("Yakin ingin keluar dari akun ini?");
+      if (!ok) {
+        e.preventDefault(); // batalin pindah halaman kalau user klik Cancel
+      } else {
+        // optional: kalau dulu kamu pakai auth di localStorage
         localStorage.removeItem("stb-auth");
-        location.href = "login.html";
+        // jangan set location.href di sini, biarkan <a href="logout.php"> yang jalan
       }
     });
   }
+
 
   const runSetup = () => {
     markActiveLink();
