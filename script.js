@@ -13,11 +13,19 @@ document.addEventListener('componentsLoaded', () => {
     localStorage.setItem('stb-theme', dark ? 'dark' : 'light');
   });
 
-  // ====== Tandai menu aktif berdasarkan halaman ======
+    // ====== Tandai menu aktif berdasarkan halaman ======
   const current = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
+
   function markActiveByPage() {
     document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
-    if (current.includes('index') || current === '') {
+
+    // index.html, dashboard_ob.php, dashboard_admin.php -> dianggap halaman Dashboard
+    if (
+      current.includes('index') ||
+      current === '' ||
+      current.includes('dashboard_ob') ||
+      current.includes('dashboard_admin')
+    ) {
       document.getElementById('link-dashboard')?.classList.add('active');
     } else if (current.includes('riwayat')) {
       document.getElementById('link-riwayat')?.classList.add('active');
@@ -27,12 +35,20 @@ document.addEventListener('componentsLoaded', () => {
   }
   markActiveByPage();
 
-  // ====== Bukan index.html? selesai (biarkan halaman mandiri bekerja) ======
-  if (!(current.includes('index') || current === '')) return;
+  // ====== Halaman mana yang pakai dashboard SPA? ======
+  const isDashboardPage =
+    current.includes('index') ||
+    current === '' ||
+    current.includes('dashboard_ob') ||
+    current.includes('dashboard_admin');
+
+  // Kalau bukan halaman dashboard, jangan lanjut ke logika SPA
+  if (!isDashboardPage) return;
 
   // =========================
-  // ====== Index (SPA) ======
+  // ====== Dashboard SPA ====
   // =========================
+
 
   const content = document.getElementById('content');
   let page = document.getElementById('page');
@@ -41,7 +57,9 @@ document.addEventListener('componentsLoaded', () => {
     page.id = 'page';
     content.appendChild(page);
   }
-
+  const basePath = location.pathname.toLowerCase().includes('/pages/')
+    ? '../'
+    : '';
   // ---- Aturan status sesuai threshold:
   // < 50%  => Aman
   // 50–74% => Hampir Penuh
@@ -57,21 +75,21 @@ document.addEventListener('componentsLoaded', () => {
     page.innerHTML = `
       <div class="cards">
         <div class="card card-total">
-          <img src="assets/icon-total.png" alt="Total" class="card-icon">
+          <img src="${basePath}assets/icon-total.png" alt="Total" class="card-icon">
           <div>
             <div class="title">Total Tempat Sampah</div>
             <div class="value">5</div>
           </div>
         </div>
         <div class="card card-penuh">
-          <img src="assets/icon-penuh.png" alt="Penuh" class="card-icon">
+          <img src="${basePath}assets/icon-penuh.png" alt="Penuh" class="card-icon">
           <div>
             <div class="title">Tempat Sampah Penuh</div>
             <div class="value">2</div>
           </div>
         </div>
         <div class="card card-kosong">
-          <img src="assets/icon-kosong.png" alt="Kosong" class="card-icon">
+          <img src="${basePath}assets/icon-kosong.png" alt="Kosong" class="card-icon">
           <div>
             <div class="title">Tempat Sampah Kosong</div>
             <div class="value">3</div>
