@@ -108,51 +108,55 @@ document.addEventListener('componentsLoaded', () => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>B001</td><td>Bin Utama</td><td>Lantai 1</td><td>Dekat Pintu Masuk</td>
-              <td class="kapasitas">
-                <div class="progress"><div class="progress-bar" style="width:85%"></div></div>
-                <span class="progress-text">85%</span>
-              </td>
-              <td><!-- status akan diisi ulang via refreshStatuses() --></td>
-              <td><button class="btn-kosongkan">Kosongkan</button></td>
-            </tr>
-            <tr>
-              <td>B002</td><td>Bin Koridor</td><td>Lantai 2</td><td>Ujung Koridor Utara</td>
-              <td class="kapasitas">
-                <div class="progress"><div class="progress-bar" style="width:58%"></div></div>
-                <span class="progress-text">58%</span>
-              </td>
-              <td></td>
-              <td><button class="btn-kosongkan">Kosongkan</button></td>
-            </tr>
-            <tr>
-              <td>B003</td><td>Bin Dapur</td><td>Lantai 1</td><td>Area Dapur Karyawan</td>
-              <td class="kapasitas">
-                <div class="progress"><div class="progress-bar" style="width:8%"></div></div>
-                <span class="progress-text">8%</span>
-              </td>
-              <td></td>
-              <td><button class="btn-kosongkan">Kosongkan</button></td>
-            </tr>
-            <tr>
-              <td>B004</td><td>Bin Ruang Rapat</td><td>Lantai 3</td><td>Dekat Ruang Anggrek</td>
-              <td class="kapasitas">
-                <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
-                <span class="progress-text">90%</span>
-              </td>
-              <td></td>
-              <td><button class="btn-kosongkan">Kosongkan</button></td>
-            </tr>
-            <tr>
-              <td>B005</td><td>Bin Lobby</td><td>Lantai Dasar</td><td>Samping Lift Utama</td>
-              <td class="kapasitas">
-                <div class="progress"><div class="progress-bar" style="width:17%"></div></div>
-                <span class="progress-text">17%</span>
-              </td>
-              <td></td>
-              <td><button class="btn-kosongkan">Kosongkan</button></td>
-            </tr>
+              <tr data-id-bin="1">
+                  <td>B001</td><td>Bin Utama</td><td>Lantai 1</td><td>Dekat Pintu Masuk</td>
+                  <td class="kapasitas">
+                      <div class="progress"><div class="progress-bar" style="width:85%"></div></div>
+                      <span class="progress-text">85%</span>
+                  </td>
+                  <td></td>
+                  <td><button class="btn-kosongkan">Kosongkan</button></td>
+              </tr>
+
+              <tr data-id-bin="2">
+                  <td>B002</td><td>Bin Koridor</td><td>Lantai 2</td><td>Ujung Koridor Utara</td>
+                  <td class="kapasitas">
+                      <div class="progress"><div class="progress-bar" style="width:58%"></div></div>
+                      <span class="progress-text">58%</span>
+                  </td>
+                  <td></td>
+                  <td><button class="btn-kosongkan">Kosongkan</button></td>
+              </tr>
+
+              <tr data-id-bin="3">
+                  <td>B003</td><td>Bin Dapur</td><td>Lantai 1</td><td>Area Dapur Karyawan</td>
+                  <td class="kapasitas">
+                      <div class="progress"><div class="progress-bar" style="width:8%"></div></div>
+                      <span class="progress-text">8%</span>
+                  </td>
+                  <td></td>
+                  <td><button class="btn-kosongkan">Kosongkan</button></td>
+              </tr>
+
+              <tr data-id-bin="4">
+                  <td>B004</td><td>Bin Ruang Rapat</td><td>Lantai 3</td><td>Dekat Ruang Anggrek</td>
+                  <td class="kapasitas">
+                      <div class="progress"><div class="progress-bar" style="width:90%"></div></div>
+                      <span class="progress-text">90%</span>
+                  </td>
+                  <td></td>
+                  <td><button class="btn-kosongkan">Kosongkan</button></td>
+              </tr>
+
+              <tr data-id-bin="5">
+                  <td>B005</td><td>Bin Lobby</td><td>Lantai Dasar</td><td>Samping Lift Utama</td>
+                  <td class="kapasitas">
+                      <div class="progress"><div class="progress-bar" style="width:17%"></div></div>
+                      <span class="progress-text">17%</span>
+                  </td>
+                  <td></td>
+                  <td><button class="btn-kosongkan">Kosongkan</button></td>
+              </tr>
           </tbody>
         </table>
       </section>
@@ -208,17 +212,52 @@ document.addEventListener('componentsLoaded', () => {
     if (!btn) return;
 
     const tr = btn.closest('tr');
-    const bar = tr.querySelector('.progress-bar');
-    const txt = tr.querySelector('.progress-text');
+    const idBin = tr.getAttribute('data-id-bin'); // pastikan <tr> punya data-id-bin
 
-    // Set 0%
-    if (bar) bar.style.width = '0%';
-    if (txt) txt.textContent = '0%';
+    if (!idBin) {
+      alert('ID tempat sampah tidak ditemukan.');
+      return;
+    }
 
-    // Update status baris + kartu-kartu
-    refreshStatuses();
-    recomputeCards();
+    if (!confirm('Yakin ingin mengosongkan tempat sampah ini?')) return;
+    const apiBase = location.pathname.toLowerCase().includes('/pages/')
+      ? ''        // lagi di /pages → /pages/kosongkan.php
+      : 'pages/';
+
+    fetch(apiBase + 'kosongkan.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: 'id_bin=' + encodeURIComponent(idBin)
+    })
+      .then(res => res.json())
+      .then(res => {
+        if (!res.success) {
+          alert(res.message || 'Gagal mengosongkan tempat sampah.');
+          return;
+        }
+
+        // Update UI jadi 0% (bisa pakai data dari res.data)
+        const bar = tr.querySelector('.progress-bar');
+        const txt = tr.querySelector('.progress-text');
+
+        if (bar) bar.style.width = '0%';
+        if (txt) txt.textContent = '0%';
+
+        // (opsional) ubah status warna di tabel
+        // lalu hitung ulang kartu ringkasan
+        refreshStatuses();
+        recomputeCards();
+
+        alert('Tempat sampah berhasil dikosongkan.');
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Terjadi kesalahan pada server.');
+      });
   });
+
 
   // ===== Event menu (khusus index) =====
   // Dashboard
