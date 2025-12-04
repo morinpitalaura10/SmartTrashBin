@@ -28,22 +28,6 @@
       </a>
     </li>
 
-    <!-- Tambah User OB -->
-    <li role="none">
-      <a href="tambah_user_ob.html" id="link-tambah-user" role="menuitem" data-link>
-        <i class="fa-solid fa-user-plus"></i>
-        <span>Tambah User OB</span>
-      </a>
-    </li>
-
-    <!-- Tambah Tempat Sampah -->
-    <li role="none">
-      <a href="tambah_tempat_sampah.html" id="link-tambah-tempat" role="menuitem" data-link>
-        <i class="fa-solid fa-trash-arrow-up"></i>
-        <span>Tambah Tempat Sampah</span>
-      </a>
-    </li>
-
     <!-- Dark Mode -->
     <li class="mode-toggle" role="none">
       <label for="toggle-theme">
@@ -72,12 +56,12 @@
 
   function markActiveLink() {
     const page = currentPageName();
+
+    // Sudah dibersihkan, hanya menu yang ada saja
     const map = {
       "index.html": "link-dashboard",
       "riwayat.html": "link-riwayat",
       "grafik.html": "link-grafik",
-      "tambah_user_ob.html": "link-tambah-user",
-      "tambah_tempat_sampah.html": "link-tambah-tempat",
     };
 
     document.querySelectorAll(".menu a[data-link]").forEach((a) => {
@@ -112,15 +96,12 @@
     btn?.addEventListener("click", (e) => {
       const ok = confirm("Yakin ingin keluar dari akun ini?");
       if (!ok) {
-        e.preventDefault(); // batalin pindah halaman kalau user klik Cancel
+        e.preventDefault();
       } else {
-        // optional: kalau dulu kamu pakai auth di localStorage
         localStorage.removeItem("stb-auth");
-        // jangan set location.href di sini, biarkan <a href="logout.php"> yang jalan
       }
     });
   }
-
 
   const runSetup = () => {
     markActiveLink();
