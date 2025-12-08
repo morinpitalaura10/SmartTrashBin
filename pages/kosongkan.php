@@ -100,6 +100,17 @@ $riw->bind_param("iiss", $id_user, $id_bin, $status_lama, $status_baru);
 $riw->execute();
 $riw->close();
 
+// ===== 7b. Insert juga ke tabel bin_history (untuk halaman riwayat OB) =====
+$insert2 = "INSERT INTO bin_history (id_ob, id_tempat, kapasitas_sebelum, status_sebelum, tindakan)
+            VALUES (?, ?, ?, ?, 'Kosongkan')";
+$riw2 = $conn->prepare($insert2);
+
+if ($riw2) {
+    $riw2->bind_param("iiis", $id_user, $id_bin, $kapasitas_lama, $status_lama);
+    $riw2->execute();
+    $riw2->close();
+}
+
 // ===== 8. Response JSON =====
 echo json_encode([
     'success' => true,

@@ -275,7 +275,18 @@ document.addEventListener('componentsLoaded', () => {
   });
 
   // Riwayat (SPA section sederhana—kalau kamu pakai riwayat.html terpisah, boleh di-skip)
+    // Riwayat
   document.getElementById('link-riwayat')?.addEventListener('click', (e) => {
+    const isPages = location.pathname.toLowerCase().includes('/pages/');
+
+    // Kalau lagi di halaman PHP (/pages/...), pakai backend riwayat_ob.php
+    if (isPages) {
+      // BIAR pindah halaman, jadi JANGAN preventDefault
+      window.location.href = 'riwayat_ob.php';
+      return;
+    }
+
+    // Kalau di index.html (root), tetap pakai versi SPA dummy
     e.preventDefault();
 
     const header = document.querySelector('.dashboard-header');
@@ -308,6 +319,7 @@ document.addEventListener('componentsLoaded', () => {
     document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
     document.getElementById('link-riwayat')?.classList.add('active');
   });
+
 
   // Penting: link Grafik biarkan pindah halaman (grafik.html)
   // document.getElementById('link-grafik') ... (JANGAN preventDefault)
