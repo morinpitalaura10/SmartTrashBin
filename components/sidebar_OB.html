@@ -29,6 +29,7 @@
       </a>
     </li>
 
+<<<<<<< HEAD:components/sidebar.html
 
     <!-- Tambah User OB -->
     <li role="none">
@@ -46,6 +47,8 @@
       </a>
     </li>
 
+=======
+>>>>>>> 4dd84a3d67b2101aa5d4043c0c4ea7b68adf4111:components/sidebar_OB.html
     <!-- Dark Mode -->
     <li class="mode-toggle" role="none">
       <label for="toggle-theme">
@@ -74,12 +77,12 @@
 
   function markActiveLink() {
     const page = currentPageName();
+
+    // Sudah dibersihkan, hanya menu yang ada saja
     const map = {
       "index.html": "link-dashboard",
       "riwayat.html": "link-riwayat",
       "grafik.html": "link-grafik",
-      "tambah_user_ob.html": "link-tambah-user",
-      "tambah_tempat_sampah.html": "link-tambah-tempat",
     };
 
     document.querySelectorAll(".menu a[data-link]").forEach((a) => {
@@ -114,15 +117,12 @@
     btn?.addEventListener("click", (e) => {
       const ok = confirm("Yakin ingin keluar dari akun ini?");
       if (!ok) {
-        e.preventDefault(); // batalin pindah halaman kalau user klik Cancel
+        e.preventDefault();
       } else {
-        // optional: kalau dulu kamu pakai auth di localStorage
         localStorage.removeItem("stb-auth");
-        // jangan set location.href di sini, biarkan <a href="logout.php"> yang jalan
       }
     });
   }
-
 
   const runSetup = () => {
     markActiveLink();
