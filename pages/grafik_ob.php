@@ -139,7 +139,7 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'data') {
 <body>
   <div class="main-container">
     <!-- SIDEBAR (include) -->
-    <div data-include="../components/sidebar.html"></div>
+    <div data-include="../components/sidebar_OB.html"></div>
 
     <!-- KONTEN -->
     <main class="content" id="content">
@@ -339,7 +339,7 @@ if (isset($_GET['mode']) && $_GET['mode'] === 'data') {
 
     // Dashboard harus balik ke dashboard_ob.php
     const dash = document.getElementById('link-dashboard');
-    if (dash) dash.setAttribute('href', 'dashboard_ob.php');
+    if (dash) dash.href = 'dashboard_ob.php';
 
     // load pertama + auto refresh
     loadGrafikData();

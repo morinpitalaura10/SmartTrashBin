@@ -6,7 +6,7 @@
   <ul class="menu" role="menu">
     <!-- Dashboard -->
     <li role="none">
-      <a href="index.html" id="link-dashboard" role="menuitem" data-link>
+      <a href="dashboard_ob.php" id="link-dashboard" role="menuitem" data-link>
         <i class="fa-solid fa-table-columns"></i>
         <span>Dashboard</span>
       </a>
@@ -60,9 +60,10 @@
 
     // Sudah dibersihkan, hanya menu yang ada saja
     const map = {
-      "index.html": "link-dashboard",
-      "riwayat.html": "link-riwayat",
-      "grafik.html": "link-grafik",
+      "dashboard_ob.php": "link-dashboard",
+      "dashboard_admin.php": "link-dashboard",
+      "riwayat_ob.php": "link-riwayat",
+      "grafik_ob.php": "link-grafik",
     };
 
     document.querySelectorAll(".menu a[data-link]").forEach((a) => {
@@ -70,7 +71,7 @@
       a.removeAttribute("aria-current");
     });
 
-    const activeId = map[page] || "link-dashboard";
+    const activeId = map[page];
     const el = document.getElementById(activeId);
     if (el) {
       el.classList.add("active");

@@ -62,10 +62,11 @@ function status_badge_class($status) {
   <!-- Styles global (dari root, jadi ../) -->
   <link rel="stylesheet" href="../styles.css" />
 </head>
+
 <body>
   <div class="main-container">
     <!-- SIDEBAR (include) -->
-    <div data-include="../components/sidebar.html"></div>
+    <div data-include="../components/sidebar_OB.html"></div>
 
     <!-- KONTEN -->
     <main class="content" id="content">
@@ -158,6 +159,7 @@ function status_badge_class($status) {
       document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
       document.getElementById('link-riwayat')?.classList.add('active');
     });
+    
   </script>
 </body>
 </html>
