@@ -1310,14 +1310,13 @@ p {
 }
 
 /* ======== HOME LANDING PAGE ======== */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-
-.home-body {
-  font-family: "Poppins", sans-serif;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: stretch;
+body.about-page {
   background: #1f3b2e;
 }
 
@@ -1335,7 +1334,7 @@ p {
   inset: 0;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
-    url("../assets/login-bg.jpg") center/cover no-repeat;
+    url("assets/login-bg.jpg") center/cover no-repeat;
   filter: blur(1px);
   transform: scale(1.03);
   z-index: -1;
