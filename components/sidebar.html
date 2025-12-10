@@ -1,0 +1,119 @@
+<aside class="sidebar" aria-label="Sidebar utama">
+  <div class="logo" aria-label="Logo Smart Trash Bin">
+    <img src="../assets/logo.png" alt="Smart Trash Bin" class="site-logo" />
+  </div>
+
+  <ul class="menu" role="menu">
+    <!-- Dashboard -->
+    <li role="none">
+      <a href="index.html" id="link-dashboard" role="menuitem" data-link>
+        <i class="fa-solid fa-table-columns"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+
+    <!-- Riwayat -->
+    <li role="none">
+      <a href="riwayat.html" id="link-riwayat" role="menuitem" data-link>
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Riwayat</span>
+      </a>
+    </li>
+
+    <!-- Grafik -->
+    <li role="none">
+      <a href="grafik.html" id="link-grafik" role="menuitem" data-link>
+        <i class="fa-solid fa-chart-column"></i>
+        <span>Grafik</span>
+      </a>
+    </li>
+
+    <!-- Dark Mode -->
+    <li class="mode-toggle" role="none">
+      <label for="toggle-theme">
+        <input type="checkbox" id="toggle-theme" />
+        <i class="fa-solid fa-moon"></i>
+        <span>Dark Mode</span>
+      </label>
+    </li>
+
+    <!-- Logout -->
+    <li role="none">
+      <a href="logout.php" id="btn-logout" class="nav-link">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span>Logout</span>
+      </a>
+    </li>
+  </ul>
+</aside>
+
+<!-- ================= SCRIPT ================= -->
+<script>
+  function currentPageName() {
+    const name = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+    return name === "" ? "index.html" : name;
+  }
+
+  function markActiveLink() {
+    const page = currentPageName();
+
+    // Sudah dibersihkan, hanya menu yang ada saja
+    const map = {
+      "index.html": "link-dashboard",
+      "riwayat.html": "link-riwayat",
+      "grafik.html": "link-grafik",
+    };
+
+    document.querySelectorAll(".menu a[data-link]").forEach((a) => {
+      a.classList.remove("active");
+      a.removeAttribute("aria-current");
+    });
+
+    const activeId = map[page] || "link-dashboard";
+    const el = document.getElementById(activeId);
+    if (el) {
+      el.classList.add("active");
+      el.setAttribute("aria-current", "page");
+    }
+  }
+
+  function initThemeToggle() {
+    const toggle = document.getElementById("toggle-theme");
+    const saved = localStorage.getItem("stb-theme");
+    if (saved === "dark") {
+      document.body.classList.add("dark-mode");
+      if (toggle) toggle.checked = true;
+    }
+    toggle?.addEventListener("change", () => {
+      const dark = toggle.checked;
+      document.body.classList.toggle("dark-mode", dark);
+      localStorage.setItem("stb-theme", dark ? "dark" : "light");
+    });
+  }
+
+  function initLogout() {
+    const btn = document.getElementById("btn-logout");
+    btn?.addEventListener("click", (e) => {
+      const ok = confirm("Yakin ingin keluar dari akun ini?");
+      if (!ok) {
+        e.preventDefault();
+      } else {
+        localStorage.removeItem("stb-auth");
+      }
+    });
+  }
+
+  const runSetup = () => {
+    markActiveLink();
+    initThemeToggle();
+    initLogout();
+  };
+
+  document.addEventListener("componentsLoaded", runSetup);
+
+  if (document.readyState === "complete" || document.readyState === "interactive") {
+    Promise.resolve().then(runSetup);
+  } else {
+    document.addEventListener("DOMContentLoaded", runSetup);
+  }
+</script>
