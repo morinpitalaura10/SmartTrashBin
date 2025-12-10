@@ -31,7 +31,7 @@ $nama = $_SESSION['nama'] ?? 'Admin';
 
   <div class="main-container">
     <!-- SIDEBAR -->
-    <div data-include="../components/sidebar.html"></div>
+    <div data-include="../components/sidebar_OB.html"></div>
 
     <!-- KONTEN -->
     <main class="content" id="content">

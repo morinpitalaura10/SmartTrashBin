@@ -1310,13 +1310,9 @@ p {
 }
 
 /* ======== HOME LANDING PAGE ======== */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
 
-body {
+
+.home-body {
   font-family: "Poppins", sans-serif;
   min-height: 100vh;
   display: flex;
