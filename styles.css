@@ -1510,6 +1510,7 @@ p {
     width: 100%;
     max-width: 260px;
   }
+}
 /* ======== AUTH / LOGIN ROLE PAGE ======== */
 
 .auth-body {
@@ -1619,5 +1620,6 @@ p {
     .role-btn {
         font-size: 14px;
     }
+    
 }
-}
+

@@ -1,0 +1,315 @@
+:root {
+  --stb-green: #006b4a;
+  --stb-green-dark: #004f37;
+  --stb-red: #e03131;
+  --stb-border: #e5e7eb;
+  --stb-bg: #f4f5f7;
+}
+
+/* wrapper keseluruhan konten (kanan) */
+.staf-wrapper {
+  flex: 1;
+  padding: 24px 40px 40px;
+  background: var(--stb-bg);
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+}
+
+/* judul di tengah */
+.staf-header {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.staf-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.staf-header p {
+  font-size: 12px;
+  color: #9ca3af;
+  margin-top: 2px;
+}
+
+/* card putih tempat tabel */
+.staf-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 24px 26px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+  border: 1px solid #f3f4f6;
+  margin-top: 10px;
+}
+
+/* baris atas card: garis + tombol + */
+.staf-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.staf-divider {
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+  margin-right: 16px;
+}
+
+/* tombol + hijau bundar */
+.btn-add-staf {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: none;
+  background: var(--stb-green);
+  color: #ffffff;
+  font-size: 22px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(0, 107, 74, 0.35);
+  transition: transform 0.1s ease, box-shadow 0.1s ease, background 0.1s ease;
+}
+
+.btn-add-staf:hover {
+  background: var(--stb-green-dark);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 107, 74, 0.45);
+}
+
+/* bungkus tabel biar ada overflow kalau layar kecil */
+.staf-table-wrapper {
+  margin-top: 6px;
+  overflow-x: auto;
+}
+
+/* tabel */
+.staf-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.staf-table thead tr {
+  border-bottom: 1px solid var(--stb-border);
+}
+
+.staf-table thead th {
+  text-align: left;
+  padding: 10px 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #6b7280;
+}
+
+.staf-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+}
+
+.staf-table tbody tr:last-child {
+  border-bottom: none;
+}
+
+.staf-table tbody td {
+  padding: 11px 8px;
+  font-size: 14px;
+}
+
+/* tombol Edit & Hapus */
+.btn-staf {
+  min-width: 72px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  border: none;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.btn-edit {
+  background: var(--stb-green);
+  margin-right: 6px;
+}
+
+.btn-edit:hover {
+  background: var(--stb-green-dark);
+}
+
+.btn-delete {
+  background: var(--stb-red);
+}
+
+.btn-delete:hover {
+  filter: brightness(0.92);
+}
+
+/* footer bawah seperti di screenshot */
+.staf-footer {
+  margin-top: 18px;
+  font-size: 11px;
+  text-align: center;
+  color: #9ca3af;
+}
+
+/* responsive konten utama */
+@media (max-width: 900px) {
+  .staf-wrapper {
+    padding: 16px 16px 24px;
+  }
+
+  .staf-card {
+    padding-inline: 16px;
+  }
+}
+
+/* ========================================================= */
+/* ========== MODAL TAMBAH STAF (STYLE KARTU LAMA) ========= */
+/* ========================================================= */
+.staf-modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.staf-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.18); /* soft overlay */
+}
+
+/* card putih bulat + shadow */
+.staf-modal-card {
+  position: relative;
+  z-index: 51;
+  width: min(660px, 100% - 40px);
+  background: #ffffff;
+  border-radius: 30px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+  font-family: "Poppins", system-ui, -apple-system, sans-serif;
+}
+
+/* bar hijau atas dengan teks "Formulir" */
+.staf-modal-header {
+  background: var(--stb-green);
+  padding: 16px 32px;
+  text-align: center;
+}
+
+.staf-modal-header h2 {
+  margin: 0;
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* body card */
+.staf-modal-body {
+  padding: 26px 40px 22px;
+}
+
+/* layout label kiri – input kanan */
+.staf-form {
+  width: 100%;
+}
+
+.staf-form-row {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  align-items: center;
+  column-gap: 18px;
+  row-gap: 10px;
+  margin-bottom: 12px;
+}
+
+.staf-form-row label {
+  font-size: 14px;
+  color: #111827;
+}
+
+.staf-form-row input {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #cbd5e0;
+  padding: 6px 10px;
+  background: #edf3ff; /* abu kebiruan seperti desain lama */
+  font-size: 14px;
+}
+
+.staf-form-row input:focus {
+  outline: none;
+  border-color: var(--stb-green);
+  box-shadow: 0 0 0 2px rgba(0, 107, 74, 0.18);
+}
+
+/* tombol Simpan & Batal kecil di kanan bawah */
+.staf-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.btn-staf-save,
+.btn-staf-cancel {
+  min-width: 90px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 1px solid #9ca3af;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-staf-save {
+  background: var(--stb-green);
+  color: #ffffff;
+  border-color: var(--stb-green);
+}
+
+.btn-staf-save:hover {
+  background: var(--stb-green-dark);
+}
+
+.btn-staf-cancel {
+  background: #f3f4f6;
+  color: #111827;
+}
+
+.btn-staf-cancel:hover {
+  background: #e5e7eb;
+}
+
+/* responsif modal */
+@media (max-width: 600px) {
+  .staf-modal-card {
+    width: 100%;
+    margin: 0 16px;
+  }
+
+  .staf-modal-body {
+    padding: 20px 20px 18px;
+  }
+
+  .staf-form-row {
+    grid-template-columns: 1fr;
+    row-gap: 4px;
+  }
+
+  .staf-form-row label {
+    margin-bottom: -2px;
+  }
+
+  .staf-form-actions {
+    justify-content: center;
+  }
+}

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Data Staf Kebersihan - Smart Trash Bin</title>
+
+  <!-- Font Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+        crossorigin="anonymous"/>
+
+  <!-- CSS global -->
+  <link rel="stylesheet" href="../styles.css" />
+
+  <!-- CSS khusus halaman -->
+  <link rel="stylesheet" href="../css/data_staf_kebersihan.css" />
+</head>
+
+<body>
+  <div class="main-container">
+
+    <!-- =============== SIDEBAR =============== -->
+    <aside class="sidebar">
+      <div class="logo">
+        <img src="../assets/logo.png" alt="Smart Trash Bin" class="site-logo" />
+      </div>
+
+      <ul class="menu">
+        <li><a href="../index.html" id="link-dashboard" data-link><i class="fa-solid fa-table-columns"></i>Dashboard</a></li>
+        <li><a href="../riwayat.html" id="link-riwayat" data-link><i class="fa-solid fa-clock-rotate-left"></i>Riwayat</a></li>
+        <li><a href="../grafik.html" id="link-grafik" data-link><i class="fa-solid fa-chart-column"></i>Grafik</a></li>
+
+        <li>
+          <a href="data_staf_kebersihan.html" id="link-data-staf" data-link class="active">
+            <i class="fa-solid fa-user-plus"></i>Data Staf Kebersihan
+          </a>
+        </li>
+
+        <li>
+          <a href="tambah_tempat_sampah.html" id="link-tambah-tempat" data-link>
+            <i class="fa-solid fa-trash-arrow-up"></i>Data Tempat Sampah
+          </a>
+        </li>
+
+        <li class="mode-toggle">
+          <label for="toggle-theme">
+            <input type="checkbox" id="toggle-theme">
+            <i class="fa-solid fa-moon"></i>Dark Mode
+          </label>
+        </li>
+
+        <li>
+          <a href="logout.php" id="btn-logout">
+            <i class="fa-solid fa-right-from-bracket"></i>Logout
+          </a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- =============== KONTEN =============== -->
+    <div class="content">
+      <main class="main">
+        <div class="staf-wrapper">
+
+          <header class="staf-header">
+            <h1>Data Staf Kebersihan</h1>
+            <p>Cleaning Staff Data</p>
+          </header>
+
+          <section class="staf-card">
+            <div class="staf-card-top">
+              <div class="staf-divider"></div>
+
+              <!-- TOMBOL TAMBAH -->
+              <button class="btn-add-staf" id="openModal">
+                +
+              </button>
+            </div>
+
+            <!-- TABEL -->
+            <div class="staf-table-wrapper">
+              <table class="staf-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Nama</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Aksi</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr><td>SK-001</td><td>Kanjeng Ratu Morin</td><td>Ratu</td><td>OB</td><td><button class="btn-staf btn-edit">Edit</button><button class="btn-staf btn-delete">Hapus</button></td></tr>
+                  <tr><td>SK-002</td><td>Subchi Marley</td><td>Uci</td><td>OB</td><td><button class="btn-staf btn-edit">Edit</button><button class="btn-staf btn-delete">Hapus</button></td></tr>
+                  <tr><td>SK-003</td><td>Dika Corbuzier</td><td>Masdik</td><td>OB</td><td><button class="btn-staf btn-edit">Edit</button><button class="btn-staf btn-delete">Hapus</button></td></tr>
+                  <tr><td>SK-004</td><td>Wildan Nurohim</td><td>Ewok</td><td>OB</td><td><button class="btn-staf btn-edit">Edit</button><button class="btn-staf btn-delete">Hapus</button></td></tr>
+                  <tr><td>SK-005</td><td>Cevi Tralala</td><td>Tralala</td><td>OB</td><td><button class="btn-staf btn-edit">Edit</button><button class="btn-staf btn-delete">Hapus</button></td></tr>
+                  <tr><td>SK-006</td><td>Dylan Dicky</td><td>Dylan</td><td>OB</td><td><button class="btn-staf btn-edit">Edit</button><button class="btn-staf btn-delete">Hapus</button></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <footer class="staf-footer">
+            © 2025 Smart Trash Bin. Hak cipta dilindungi.
+          </footer>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- =========================== MODAL FORM =========================== -->
+  <!-- ================================================================= -->
+  <div class="staf-modal hidden" id="modalStaf">
+    <div class="staf-modal-backdrop"></div>
+
+    <div class="staf-modal-card">
+      <!-- BAR HIJAU ATAS CARD (tulisan Formulir aja) -->
+      <div class="staf-modal-header">
+        <h2>Formulir</h2>
+      </div>
+
+      <div class="staf-modal-body">
+        <form class="staf-form">
+          <div class="staf-form-row">
+            <label for="staf-id">ID</label>
+            <input type="text" id="staf-id" required />
+          </div>
+
+          <div class="staf-form-row">
+            <label for="staf-nama">Nama</label>
+            <input type="text" id="staf-nama" required />
+          </div>
+
+          <div class="staf-form-row">
+            <label for="staf-username">Username</label>
+            <input type="text" id="staf-username" required />
+          </div>
+
+          <div class="staf-form-row">
+            <label for="staf-password">Password</label>
+            <input type="password" id="staf-password" required />
+          </div>
+
+          <div class="staf-form-row">
+            <label for="staf-role">Role</label>
+            <input type="text" id="staf-role" placeholder="OB" required />
+          </div>
+
+          <div class="staf-form-actions">
+            <button type="submit" class="btn-staf-save">Simpan</button>
+            <button type="button" class="btn-staf-cancel" id="closeModal">Batal</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SCRIPT SIDEBAR + MODAL ================= -->
+  <script>
+    // --- Sidebar Active Link ---
+    function currentPageName() {
+      const name = (location.pathname.split("/").pop() || "index.html").toLowerCase();
+      return name === "" ? "index.html" : name;
+    }
+
+    function markActiveLink() {
+      const page = currentPageName();
+      const map = {
+        "index.html": "link-dashboard",
+        "riwayat.html": "link-riwayat",
+        "grafik.html": "link-grafik",
+        "data_staf_kebersihan.html": "link-data-staf",
+        "tambah_tempat_sampah.html": "link-tambah-tempat",
+      };
+
+      document.querySelectorAll(".menu a[data-link]").forEach(a => {
+        a.classList.remove("active");
+      });
+
+      const activeId = map[page];
+      if (activeId) document.getElementById(activeId).classList.add("active");
+    }
+
+    markActiveLink();
+
+    // ===================== MODAL SCRIPT =====================
+    const modal   = document.getElementById("modalStaf");
+    const openBtn = document.getElementById("openModal");
+    const closeBtn = document.getElementById("closeModal");
+    const backdrop = document.querySelector(".staf-modal-backdrop");
+
+    openBtn.addEventListener("click", () => modal.classList.remove("hidden"));
+    closeBtn.addEventListener("click", () => modal.classList.add("hidden"));
+    backdrop.addEventListener("click", () => modal.classList.add("hidden"));
+  </script>
+
+</body>
+</html>
